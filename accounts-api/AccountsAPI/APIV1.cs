@@ -11,6 +11,12 @@ public static class AccountsAPIV1
         return TypedResults.Created($"/api/v1/accounts/{account.Id}", account);
     }
 
+    static Ok<ICollection<Account>> GetAccounts(IStore store)
+    {
+        var accounts = store.GetAll();
+        return TypedResults.Ok(accounts);
+    }
+
     public static RouteGroupBuilder MapAccountsAPI(this RouteGroupBuilder group)
     {
         group
@@ -21,6 +27,16 @@ public static class AccountsAPIV1
                 generatedOperation.Summary = "Create a new account.";
                 generatedOperation.Description =
                     "Create a new account for a customer with the provided customer ID.";
+
+                return generatedOperation;
+            });
+        group
+            .MapGet("/", GetAccounts)
+            .WithName("GetAccounts")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Fetch all accounts.";
+                generatedOperation.Description = "Fetches a list of all accounts that exist.";
 
                 return generatedOperation;
             });
