@@ -4,7 +4,7 @@ namespace AccountsAPI.Tests;
 
 public class TestInMemoryStore
 {
-    IStore store;
+    InMemoryStore store;
 
     public TestInMemoryStore()
     {
@@ -84,7 +84,7 @@ public class TestInMemoryStore
 
         store.DeleteById(account1.Id);
 
-        Assert.Equal(1, store.GetAll().Count);
+        Assert.Single(store.GetAll());
         Assert.Null(store.GetById(account1.Id));
     }
 
@@ -108,7 +108,7 @@ public class TestInMemoryStore
 
         store.DeleteByCustomerId(1);
 
-        Assert.Equal(1, store.GetAll().Count);
-        Assert.Equal(0, store.GetByCustomerId(1).Count);
+        Assert.Single(store.GetAll());
+        Assert.Empty(store.GetByCustomerId(1));
     }
 }

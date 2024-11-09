@@ -10,8 +10,8 @@ public interface IStore
 {
     Account Create(int customerId);
     Account? GetById(int id);
-    List<Account> GetAll();
-    List<Account> GetByCustomerId(int customerId);
+    ICollection<Account> GetAll();
+    ICollection<Account> GetByCustomerId(int customerId);
     void DeleteById(int id);
     void DeleteByCustomerId(int customerId);
 }
@@ -40,12 +40,12 @@ public class InMemoryStore : IStore
         return _accounts.Find(a => a.Id == id);
     }
 
-    public List<Account> GetAll()
+    public ICollection<Account> GetAll()
     {
-        return _accounts;
+        return new List<Account>(_accounts);
     }
 
-    public List<Account> GetByCustomerId(int customerId)
+    public ICollection<Account> GetByCustomerId(int customerId)
     {
         return _accounts.FindAll(a => a.CustomerId == customerId).ToList();
     }
