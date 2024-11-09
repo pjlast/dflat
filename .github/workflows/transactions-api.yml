@@ -1,4 +1,4 @@
-name: Validate PR (accounts-api)
+name: Validate PR (transactions-api)
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./accounts-api
+        working-directory: ./transactions-api
     name: Check Formatting
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./accounts-api
+        working-directory: ./transactions-api
     name: Run Tests
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./accounts-api
+        working-directory: ./transactions-api
     name: Run Linting
     steps:
       - uses: actions/checkout@v4

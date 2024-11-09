@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionsAPI", "TransactionsAPI\TransactionsAPI.csproj", "{A133C6A2-1D67-45AE-9B2B-7B6B41EEBEB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionsAPI.Tests", "TransactionsAPI.Tests\TransactionsAPI.Tests.csproj", "{28AB959A-DB8F-4590-BFD0-DFB9179DCEC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A133C6A2-1D67-45AE-9B2B-7B6B41EEBEB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A133C6A2-1D67-45AE-9B2B-7B6B41EEBEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A133C6A2-1D67-45AE-9B2B-7B6B41EEBEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A133C6A2-1D67-45AE-9B2B-7B6B41EEBEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28AB959A-DB8F-4590-BFD0-DFB9179DCEC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AB959A-DB8F-4590-BFD0-DFB9179DCEC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AB959A-DB8F-4590-BFD0-DFB9179DCEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AB959A-DB8F-4590-BFD0-DFB9179DCEC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
