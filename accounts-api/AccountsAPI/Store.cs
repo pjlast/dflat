@@ -13,6 +13,7 @@ public interface IStore
     List<Account> GetAll();
     List<Account> GetByCustomerId(int customerId);
     void DeleteById(int id);
+    void DeleteByCustomerId(int customerId);
 }
 
 public class InMemoryStore : IStore
@@ -57,5 +58,10 @@ public class InMemoryStore : IStore
             throw new KeyNotFoundException($"account with ID {id} does not exit");
         }
         _accounts = _accounts.FindAll(a => a.Id != id);
+    }
+
+    public void DeleteByCustomerId(int customerId)
+    {
+        _accounts = _accounts.FindAll(a => a.CustomerId != customerId);
     }
 }

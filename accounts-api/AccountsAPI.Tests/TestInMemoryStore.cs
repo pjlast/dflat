@@ -80,11 +80,11 @@ public class TestInMemoryStore
         var account1 = store.Create(1);
         var account2 = store.Create(2);
 
-        Assert.Equal(store.GetAll().Count, 2);
+        Assert.Equal(2, store.GetAll().Count);
 
         store.DeleteById(account1.Id);
 
-        Assert.Equal(store.GetAll().Count, 1);
+        Assert.Equal(1, store.GetAll().Count);
         Assert.Null(store.GetById(account1.Id));
     }
 
@@ -95,5 +95,20 @@ public class TestInMemoryStore
         {
             store.DeleteById(1);
         });
+    }
+
+    [Fact(DisplayName = "Delete all accounts of a specific customer ID")]
+    public void DeleteByCustomerId()
+    {
+        store.Create(1);
+        store.Create(1);
+        store.Create(2);
+
+        Assert.Equal(3, store.GetAll().Count);
+
+        store.DeleteByCustomerId(1);
+
+        Assert.Equal(1, store.GetAll().Count);
+        Assert.Equal(0, store.GetByCustomerId(1).Count);
     }
 }
