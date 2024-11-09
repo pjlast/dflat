@@ -73,4 +73,18 @@ public class TestInMemoryStore
         var gotCustomer2Accounts = store.GetByCustomerId(2);
         Assert.Equal(expectedCustomer2Accounts, gotCustomer2Accounts);
     }
+
+    [Fact(DisplayName = "Delete an account")]
+    public void DeleteAccount()
+    {
+        var account1 = store.Create(1);
+        var account2 = store.Create(2);
+
+        Assert.Equal(store.GetAll().Count, 2);
+
+        store.DeleteById(account1.Id);
+
+        Assert.Equal(store.GetAll().Count, 1);
+        Assert.Null(store.GetById(account1.Id));
+    }
 }

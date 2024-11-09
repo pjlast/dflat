@@ -12,6 +12,7 @@ public interface IStore
     Account? GetById(int id);
     List<Account> GetAll();
     List<Account> GetByCustomerId(int customerId);
+    void DeleteById(int id);
 }
 
 public class InMemoryStore : IStore
@@ -46,5 +47,10 @@ public class InMemoryStore : IStore
     public List<Account> GetByCustomerId(int customerId)
     {
         return _accounts.FindAll(a => a.CustomerId == customerId).ToList();
+    }
+
+    public void DeleteById(int id)
+    {
+        _accounts = _accounts.FindAll(a => a.Id != id);
     }
 }
