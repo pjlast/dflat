@@ -28,6 +28,13 @@ public interface IStore
     /// <param name="amount">Value of the transaction.</param>
     /// <returns>A newly created <c>Transaction</c>.</returns>
     Transaction Create(int accountId, int amount);
+
+    /// <summary>
+    /// Fetch all <c>Transaction</c>s belonging to a specific account.
+    /// </summary>
+    /// <param name="accountId">ID of the account of which the transactions should be fetched.</param>
+    /// <returns>All <c>Transaction</c>s belonging to the account.</returns>
+    ICollection<Transaction> GetByAccountId(int accountId);
 }
 
 public class InMemoryStore : IStore
@@ -52,5 +59,10 @@ public class InMemoryStore : IStore
         };
         _transactions = _transactions.Append(newTransaction).ToList();
         return newTransaction;
+    }
+
+    public ICollection<Transaction> GetByAccountId(int accountId)
+    {
+        return _transactions.FindAll(t => t.AccountId == accountId).ToList();
     }
 }

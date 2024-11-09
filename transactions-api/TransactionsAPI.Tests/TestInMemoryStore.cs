@@ -29,4 +29,22 @@ public class TestInMemoryStore
         Assert.Equal(2, transaction.AccountId);
         Assert.Equal(10, transaction.Amount);
     }
+
+    [Fact(DisplayName = "Fetch all transactions for a specific account")]
+    public void GetTransactionsByAccountId()
+    {
+        var expectedAccount1Transactions = new List<Transaction>
+        {
+            store.Create(1, 10),
+            store.Create(1, 20),
+        };
+
+        var expectedAccount2Transactions = new List<Transaction> { store.Create(2, 30) };
+
+        var gotAccount1Transactions = store.GetByAccountId(1);
+        Assert.Equal(expectedAccount1Transactions, gotAccount1Transactions);
+
+        var gotAccount2Transactions = store.GetByAccountId(2);
+        Assert.Equal(expectedAccount2Transactions, gotAccount2Transactions);
+    }
 }
