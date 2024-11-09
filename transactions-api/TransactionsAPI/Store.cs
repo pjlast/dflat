@@ -35,6 +35,13 @@ public interface IStore
     /// <param name="accountId">ID of the account of which the transactions should be fetched.</param>
     /// <returns>All <c>Transaction</c>s belonging to the account.</returns>
     ICollection<Transaction> GetByAccountId(int accountId);
+
+    /// <summary>
+    /// Delete all <c>Transaction</c>s belonging to an account with the provided
+    /// ID.
+    /// </summary>
+    /// <param name="accountId">ID of the account of which the transactions should be deleted.</param>
+    void DeleteByAccountId(int accountId);
 }
 
 public class InMemoryStore : IStore
@@ -64,5 +71,10 @@ public class InMemoryStore : IStore
     public ICollection<Transaction> GetByAccountId(int accountId)
     {
         return _transactions.FindAll(t => t.AccountId == accountId).ToList();
+    }
+
+    public void DeleteByAccountId(int accountId)
+    {
+        _transactions = _transactions.FindAll(t => t.AccountId != accountId);
     }
 }

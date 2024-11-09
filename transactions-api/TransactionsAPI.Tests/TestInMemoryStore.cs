@@ -47,4 +47,20 @@ public class TestInMemoryStore
         var gotAccount2Transactions = store.GetByAccountId(2);
         Assert.Equal(expectedAccount2Transactions, gotAccount2Transactions);
     }
+
+    [Fact(DisplayName = "Delete all transactions for a specific account")]
+    public void DeleteTransactionsByAccountId()
+    {
+        store.Create(1, 10);
+        store.Create(1, 20);
+        store.Create(2, 30);
+
+        Assert.Equal(2, store.GetByAccountId(1).Count);
+        Assert.Single(store.GetByAccountId(2));
+
+        store.DeleteByAccountId(1);
+
+        Assert.Single(store.GetByAccountId(2));
+        Assert.Empty(store.GetByAccountId(1));
+    }
 }
