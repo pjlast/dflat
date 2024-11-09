@@ -87,4 +87,13 @@ public class TestInMemoryStore
         Assert.Equal(store.GetAll().Count, 1);
         Assert.Null(store.GetById(account1.Id));
     }
+
+    [Fact(DisplayName = "Deleting a non-existing account throws an exception")]
+    public void DeleteNonExistingAccount()
+    {
+        Assert.Throws<KeyNotFoundException>(() =>
+        {
+            store.DeleteById(1);
+        });
+    }
 }

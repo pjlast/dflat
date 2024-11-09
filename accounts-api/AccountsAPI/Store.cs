@@ -51,6 +51,11 @@ public class InMemoryStore : IStore
 
     public void DeleteById(int id)
     {
+        var account = _accounts.Find(a => a.Id == id);
+        if (account is null)
+        {
+            throw new KeyNotFoundException($"account with ID {id} does not exit");
+        }
         _accounts = _accounts.FindAll(a => a.Id != id);
     }
 }
