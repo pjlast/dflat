@@ -34,10 +34,32 @@ public static class AccountsAPIV1
         var account = store.GetById(id);
         if (account is null)
         {
-            return Results.NotFound();
+            return TypedResults.NotFound();
         }
 
-        return Results.Ok(account);
+        return TypedResults.Ok(account);
+    }
+
+    static IResult DeleteAccountById(int id, IStore store)
+    {
+        try
+        {
+            store.DeleteById(id);
+            return TypedResults.Ok();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return TypedResults.NotFound(e.ToString());
+        }
+    }
+
+    static Ok DeleteAccountsByCustomerId(
+        [FromQuery(Name = "customerId")] int customerId,
+        IStore store
+    )
+    {
+        store.DeleteByCustomerId(customerId);
+        return TypedResults.Ok();
     }
 
     public static RouteGroupBuilder MapAccountsAPI(this RouteGroupBuilder group)
@@ -66,6 +88,19 @@ public static class AccountsAPIV1
             });
 
         group
+            .MapDelete("/", DeleteAccountsByCustomerId)
+            .WithName("DeleteAccountsByCustomerId")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary =
+                    "Delete all accounts belonging to the customer with the specified ID.";
+                generatedOperation.Description =
+                    "Deletes all accounts belonging to the customer with the specified ID.";
+
+                return generatedOperation;
+            });
+
+        group
             .MapGet("/{id}", GetAccountById)
             .WithName("GetAccountById")
             .WithOpenApi(generatedOperation =>
@@ -77,6 +112,19 @@ public static class AccountsAPIV1
                 return generatedOperation;
             })
             .Produces<Account>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group
+            .MapDelete("/{id}", DeleteAccountById)
+            .WithName("DeleteAccountById")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Delete an account with the specified ID.";
+                generatedOperation.Description =
+                    "Delete an account with the provided ID. Returns a 404 status code if the account does not exist.";
+                return generatedOperation;
+            })
+            .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 
         return group;

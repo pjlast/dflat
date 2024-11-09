@@ -66,5 +66,34 @@ public class TestAPI
         Assert.NotNull(accountList);
         Assert.Single(accountList);
         Assert.Equal(1, accountList[0].CustomerId);
+
+        // Delete account 1 and assert it is gone
+        result = await client.DeleteAsync(new Uri("/api/v1/accounts/1")).ConfigureAwait(true);
+
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        result = await client.GetAsync(new Uri("/api/v1/accounts")).ConfigureAwait(true);
+        accountList = await result.Content.ReadFromJsonAsync<List<Account>>().ConfigureAwait(true);
+
+        Assert.NotNull(accountList);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.Single(accountList);
+        Assert.DoesNotContain(new Account { Id = 1, CustomerId = 1 }, accountList);
+
+        // Deleting an account that does not exist returns a 404
+        result = await client.DeleteAsync(new Uri("/api/v1/accounts/10")).ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+
+        // Delete accounts by customer ID
+#pragma warning disable CA2234
+        result = await client.DeleteAsync("/api/v1/accounts?customerId=2").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        result = await client.GetAsync(new Uri("/api/v1/accounts")).ConfigureAwait(true);
+        accountList = await result.Content.ReadFromJsonAsync<List<Account>>().ConfigureAwait(true);
+
+        Assert.NotNull(accountList);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.Empty(accountList);
     }
 }
