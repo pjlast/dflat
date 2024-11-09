@@ -75,7 +75,9 @@ public static class AccountsAPIV1
                     "Fetch an account with the provided ID. Returns a 404 status code if the account does not exist.";
 
                 return generatedOperation;
-            });
+            })
+            .Produces<Account>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
 
         return group;
     }
