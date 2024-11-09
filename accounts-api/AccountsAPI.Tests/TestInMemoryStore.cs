@@ -56,7 +56,21 @@ public class TestInMemoryStore
             store.Create(3),
         };
 
-        var gotAccounts = store.GetAllAccounts();
+        var gotAccounts = store.GetAll();
         Assert.Equal(expectedAccounts, gotAccounts);
+    }
+
+    [Fact(DisplayName = "Fetch accounts by customer ID")]
+    public void GetAccountsByCustomerId()
+    {
+        var expectedCustomer1Accounts = new List<Account> { store.Create(1), store.Create(1) };
+
+        var expectedCustomer2Accounts = new List<Account> { store.Create(2) };
+
+        var gotCustomer1Accounts = store.GetByCustomerId(1);
+        Assert.Equal(expectedCustomer1Accounts, gotCustomer1Accounts);
+
+        var gotCustomer2Accounts = store.GetByCustomerId(2);
+        Assert.Equal(expectedCustomer2Accounts, gotCustomer2Accounts);
     }
 }
