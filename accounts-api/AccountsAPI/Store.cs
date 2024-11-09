@@ -9,6 +9,7 @@ public record Account
 public interface IStore
 {
     Account Create(int customerId);
+    Account? GetById(int id);
 }
 
 public class InMemoryStore : IStore
@@ -28,5 +29,10 @@ public class InMemoryStore : IStore
         var newAccount = new Account { Id = nextId, CustomerId = customerId };
         _accounts = _accounts.Append(newAccount).ToList();
         return newAccount;
+    }
+
+    public Account? GetById(int id)
+    {
+        return _accounts.Find(a => a.Id == id);
     }
 }
