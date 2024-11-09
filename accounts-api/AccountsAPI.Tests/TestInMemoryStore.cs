@@ -45,4 +45,18 @@ public class TestInMemoryStore
         var fetchedAccount = store.GetById(1337);
         Assert.Null(fetchedAccount);
     }
+
+    [Fact(DisplayName = "Fetch all accounts")]
+    public void GetAllAccounts()
+    {
+        var expectedAccounts = new List<Account>
+        {
+            store.Create(1),
+            store.Create(2),
+            store.Create(3),
+        };
+
+        var gotAccounts = store.GetAllAccounts();
+        Assert.Equal(expectedAccounts, gotAccounts);
+    }
 }
