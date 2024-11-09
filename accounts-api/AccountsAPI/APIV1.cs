@@ -1,5 +1,6 @@
 using Accounts.Store;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Accounts.APIV1;
 
@@ -11,10 +12,21 @@ public static class AccountsAPIV1
         return TypedResults.Created($"/api/v1/accounts/{account.Id}", account);
     }
 
-    static Ok<ICollection<Account>> GetAccounts(IStore store)
+    static Ok<ICollection<Account>> GetAccounts(
+        [FromQuery(Name = "customerId")] int? customerId,
+        IStore store
+    )
     {
-        var accounts = store.GetAll();
-        return TypedResults.Ok(accounts);
+        if (customerId is int id)
+        {
+            var accounts = store.GetByCustomerId(id);
+            return TypedResults.Ok(accounts);
+        }
+        else
+        {
+            var accounts = store.GetAll();
+            return TypedResults.Ok(accounts);
+        }
     }
 
     static IResult GetAccountById(int id, IStore store)

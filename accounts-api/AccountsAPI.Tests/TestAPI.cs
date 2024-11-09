@@ -56,5 +56,15 @@ public class TestAPI
         result = await client.GetAsync(new Uri("/api/v1/accounts/3")).ConfigureAwait(true);
 
         Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+
+        // Fetch all accounts for customer 1
+#pragma warning disable CA2234
+        result = await client.GetAsync("/api/v1/accounts?customerId=1").ConfigureAwait(true);
+        accountList = await result.Content.ReadFromJsonAsync<List<Account>>().ConfigureAwait(true);
+
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.NotNull(accountList);
+        Assert.Single(accountList);
+        Assert.Equal(1, accountList[0].CustomerId);
     }
 }
