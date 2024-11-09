@@ -17,6 +17,17 @@ public static class AccountsAPIV1
         return TypedResults.Ok(accounts);
     }
 
+    static IResult GetAccountById(int id, IStore store)
+    {
+        var account = store.GetById(id);
+        if (account is null)
+        {
+            return Results.NotFound();
+        }
+
+        return Results.Ok(account);
+    }
+
     public static RouteGroupBuilder MapAccountsAPI(this RouteGroupBuilder group)
     {
         group
@@ -30,6 +41,7 @@ public static class AccountsAPIV1
 
                 return generatedOperation;
             });
+
         group
             .MapGet("/", GetAccounts)
             .WithName("GetAccounts")
@@ -40,6 +52,19 @@ public static class AccountsAPIV1
 
                 return generatedOperation;
             });
+
+        group
+            .MapGet("/{id}", GetAccountById)
+            .WithName("GetAccountById")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Fetch an account by its ID.";
+                generatedOperation.Description =
+                    "Fetch an account with the provided ID. Returns a 404 status code if the account does not exist.";
+
+                return generatedOperation;
+            });
+
         return group;
     }
 }
