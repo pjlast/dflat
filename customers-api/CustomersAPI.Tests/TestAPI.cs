@@ -61,5 +61,19 @@ public class TestAPI
 #pragma warning disable CA2234
         result = await client.GetAsync("/api/v1/customers/10").ConfigureAwait(true);
         Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
+
+        // Update a customer
+        var customerToUpdate = new Customer(1, "Steve", "Stevenson");
+        result = await client
+            .PutAsJsonAsync("/api/v1/customers", customerToUpdate)
+            .ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        var updatedCustomer = await result
+            .Content.ReadFromJsonAsync<Customer>()
+            .ConfigureAwait(true);
+        Assert.Equal(1, updatedCustomer?.Id);
+        Assert.Equal("Steve", updatedCustomer?.FirstName);
+        Assert.Equal("Stevenson", updatedCustomer?.LastName);
     }
 }

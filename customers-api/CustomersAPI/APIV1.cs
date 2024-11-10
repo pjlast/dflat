@@ -27,6 +27,19 @@ public static class CustomersAPIV1
         return TypedResults.Ok(customer);
     }
 
+    static IResult UpdateCustomer(Customer customer, IStore store)
+    {
+        try
+        {
+            var updatedCustomer = store.Update(customer);
+            return TypedResults.Ok(updatedCustomer);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return TypedResults.NotFound(e.ToString());
+        }
+    }
+
     public static RouteGroupBuilder MapCustomersAPI(this RouteGroupBuilder group)
     {
         group
@@ -58,6 +71,20 @@ public static class CustomersAPIV1
                 generatedOperation.Summary = "Fetch a customer by their ID.";
                 generatedOperation.Description =
                     "Fetch a customer with the provided ID. Returns a 404 status code if the customer does not exist.";
+
+                return generatedOperation;
+            })
+            .Produces<Customer>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
+        group
+            .MapPut("/", UpdateCustomer)
+            .WithName("UpdateCustomer")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Update a customer.";
+                generatedOperation.Description =
+                    "Update an existing customer with a matching ID. Returns a 404 status code if the customer does not exist.";
 
                 return generatedOperation;
             })
