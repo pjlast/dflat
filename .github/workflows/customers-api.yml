@@ -1,0 +1,58 @@
+name: Validate PR (customers-api)
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  check_formatting:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./customers-api
+    name: Check Formatting
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          dotnet tool restore
+          dotnet csharpier --check .
+
+  run_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./customers-api
+    name: Run Tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build
+      - name: Test with dotnet CLI
+        run: dotnet test
+
+  run_lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./customers-api
+    name: Run Linting
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Test with dotnet CLI
+        run: dotnet test
