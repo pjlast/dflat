@@ -40,6 +40,12 @@ public interface IStore
     /// <param name="id">ID of the customer.</param>
     /// <returns>The matching customer, or null if it does not exist.</returns>
     Customer? GetById(int id);
+
+    /// <summary>
+    /// Fetch all <c>Customer</c>s in the store.
+    /// </summary>
+    /// <returns>A colleciton of all <c>Customer</c>s in the store.</returns>
+    ICollection<Customer> GetAll();
 }
 
 public class InMemoryStore : IStore
@@ -64,5 +70,10 @@ public class InMemoryStore : IStore
     public Customer? GetById(int id)
     {
         return _customers.Find(c => c.Id == id);
+    }
+
+    public ICollection<Customer> GetAll()
+    {
+        return new List<Customer>(_customers);
     }
 }

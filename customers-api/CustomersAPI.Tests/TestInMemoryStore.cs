@@ -37,4 +37,17 @@ public class TestInMemoryStore
         var gotCustomer = store.GetById(expectedCustomer.Id);
         Assert.Equal(expectedCustomer, gotCustomer);
     }
+
+    [Fact(DisplayName = "Fetch all customers")]
+    public void GetAllCustomers()
+    {
+        var expectedCustomers = new List<Customer>
+        {
+            store.Create("Sally", "Smith"),
+            store.Create("John", "Jacobs"),
+        };
+
+        var gotCustomers = store.GetAll();
+        Assert.Equal(expectedCustomers, gotCustomers);
+    }
 }
