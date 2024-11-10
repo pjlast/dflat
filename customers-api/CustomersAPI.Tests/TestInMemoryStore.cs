@@ -50,4 +50,26 @@ public class TestInMemoryStore
         var gotCustomers = store.GetAll();
         Assert.Equal(expectedCustomers, gotCustomers);
     }
+
+    [Fact(DisplayName = "Update a customer's details")]
+    public void UpdateCustomer()
+    {
+        var existingCustomer = store.Create("John", "Jacobss");
+
+        var updateCustomer = new Customer(existingCustomer.Id, "John", "Jacobs");
+        var updatedCustomer = store.Update(updateCustomer);
+
+        var fetchedCustomer = store.GetById(updatedCustomer.Id);
+
+        Assert.NotNull(fetchedCustomer);
+        Assert.Equal(updatedCustomer, fetchedCustomer);
+        Assert.Equal("Jacobs", fetchedCustomer.LastName);
+    }
+
+    [Fact(DisplayName = "Attempting to update a non-existent customer throws")]
+    public void UpdateNonExistentCustomer()
+    {
+        var nonExistingCustomer = new Customer(10, "Barry", "Burkes");
+        Assert.Throws<KeyNotFoundException>(() => store.Update(nonExistingCustomer));
+    }
 }

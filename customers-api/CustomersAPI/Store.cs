@@ -46,6 +46,14 @@ public interface IStore
     /// </summary>
     /// <returns>A colleciton of all <c>Customer</c>s in the store.</returns>
     ICollection<Customer> GetAll();
+
+    /// <summary>
+    /// Update an existing <c>Customer</c>.
+    /// </summary>
+    /// <param name="customer">The customer to be updated. A customer with a matching <c>Id</c> must exist.</param>
+    /// <returns>The updated <c>Customer</c>.</returns>
+    /// <exception cref="KeyNotFoundException">No customer with a matching <c>Id</c> could be found.</exception>
+    Customer Update(Customer customer);
 }
 
 public class InMemoryStore : IStore
@@ -75,5 +83,29 @@ public class InMemoryStore : IStore
     public ICollection<Customer> GetAll()
     {
         return new List<Customer>(_customers);
+    }
+
+    public Customer Update(Customer customer)
+    {
+        ArgumentNullException.ThrowIfNull(customer);
+
+        var existingCustomer = GetById(customer.Id);
+        if (existingCustomer is null)
+        {
+            throw new KeyNotFoundException($"No existing customer with ID {customer.Id} found.");
+        }
+
+        _customers = _customers
+            .Select(c =>
+            {
+                if (c.Id == customer.Id)
+                {
+                    return customer;
+                }
+                return c;
+            })
+            .ToList();
+
+        return customer;
     }
 }
