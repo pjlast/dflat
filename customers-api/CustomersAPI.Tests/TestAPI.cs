@@ -75,5 +75,21 @@ public class TestAPI
         Assert.Equal(1, updatedCustomer?.Id);
         Assert.Equal("Steve", updatedCustomer?.FirstName);
         Assert.Equal("Stevenson", updatedCustomer?.LastName);
+
+        // Delete a customer
+#pragma warning disable CA2234
+        result = await client.DeleteAsync("/api/v1/customers/1").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+#pragma warning disable CA2234
+        result = await client.GetAsync("/api/v1/customers").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        customerList = await result
+            .Content.ReadFromJsonAsync<List<Customer>>()
+            .ConfigureAwait(true);
+
+        Assert.NotNull(customerList);
+        Assert.Single(customerList);
     }
 }

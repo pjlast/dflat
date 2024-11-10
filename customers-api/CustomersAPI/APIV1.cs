@@ -40,6 +40,19 @@ public static class CustomersAPIV1
         }
     }
 
+    static IResult DeleteCustomerById(int id, IStore store)
+    {
+        try
+        {
+            store.DeleteById(id);
+            return TypedResults.Ok();
+        }
+        catch (KeyNotFoundException e)
+        {
+            return TypedResults.NotFound(e.ToString());
+        }
+    }
+
     public static RouteGroupBuilder MapCustomersAPI(this RouteGroupBuilder group)
     {
         group
@@ -90,6 +103,17 @@ public static class CustomersAPIV1
             })
             .Produces<Customer>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
+
+        group
+            .MapDelete("/{id}", DeleteCustomerById)
+            .WithName("DeleteCustomerById")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Delete the customer with the specified ID.";
+                generatedOperation.Description = "Delete the customer with the specified ID.";
+
+                return generatedOperation;
+            });
 
         return group;
     }
