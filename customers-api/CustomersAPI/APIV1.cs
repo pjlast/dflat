@@ -11,6 +11,11 @@ public static class CustomersAPIV1
         return TypedResults.Created($"/api/v1/customers/{customer.Id}", customer);
     }
 
+    static Ok<ICollection<Customer>> GetCustomers(IStore store)
+    {
+        return TypedResults.Ok(store.GetAll());
+    }
+
     public static RouteGroupBuilder MapCustomersAPI(this RouteGroupBuilder group)
     {
         group
@@ -18,11 +23,20 @@ public static class CustomersAPIV1
             .WithName("CreateCustomer")
             .WithOpenApi(generatedOperation =>
             {
-                generatedOperation.Summary = "Create a new customer";
+                generatedOperation.Summary = "Create a new customer.";
                 generatedOperation.Description =
                     "Create a new customer with the provided first and last names.";
                 return generatedOperation;
             });
+
+        group.MapGet("/", GetCustomers)
+            .WithName("GetAllCustomers")
+            .WithOpenApi(generatedOperation =>
+                    {
+                        generatedOperation.Summary = "Get all customers.";
+                        generatedOperation.Description = "Get all customers on the system.";
+                        return generatedOperation;
+                    });
         return group;
     }
 }
