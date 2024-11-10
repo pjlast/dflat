@@ -16,7 +16,7 @@ public record Transaction
 
 /// <summary>
 /// Interface <c>IStore</c> describes an interface that allows creating,
-/// fetching, and delete a collection of <c>Transaction</c> records.
+/// fetching, and deleting a collection of <c>Transaction</c> records.
 /// </summary>
 public interface IStore
 {
