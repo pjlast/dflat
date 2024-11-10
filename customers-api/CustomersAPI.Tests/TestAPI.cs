@@ -46,5 +46,20 @@ public class TestAPI
 
         Assert.NotNull(customerList);
         Assert.Equal(2, customerList.Count);
+
+        // Fetch customer 2
+#pragma warning disable CA2234
+        result = await client.GetAsync("/api/v1/customers/2").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        var customer2 = await result.Content.ReadFromJsonAsync<Customer>().ConfigureAwait(true);
+
+        Assert.NotNull(customer2);
+        Assert.Equal(2, customer2.Id);
+
+        // Fetching a non-existing customer returns 404
+#pragma warning disable CA2234
+        result = await client.GetAsync("/api/v1/customers/10").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.NotFound, result.StatusCode);
     }
 }

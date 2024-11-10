@@ -16,6 +16,17 @@ public static class CustomersAPIV1
         return TypedResults.Ok(store.GetAll());
     }
 
+    static IResult GetCustomerById(int id, IStore store)
+    {
+        var customer = store.GetById(id);
+        if (customer is null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(customer);
+    }
+
     public static RouteGroupBuilder MapCustomersAPI(this RouteGroupBuilder group)
     {
         group
@@ -38,6 +49,21 @@ public static class CustomersAPIV1
                 generatedOperation.Description = "Get all customers on the system.";
                 return generatedOperation;
             });
+
+        group
+            .MapGet("/{id}", GetCustomerById)
+            .WithName("GetCustomerById")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Fetch a customer by their ID.";
+                generatedOperation.Description =
+                    "Fetch a customer with the provided ID. Returns a 404 status code if the customer does not exist.";
+
+                return generatedOperation;
+            })
+            .Produces<Customer>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
+
         return group;
     }
 }
