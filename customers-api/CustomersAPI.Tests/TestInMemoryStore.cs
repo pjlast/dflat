@@ -72,4 +72,20 @@ public class TestInMemoryStore
         var nonExistingCustomer = new Customer(10, "Barry", "Burkes");
         Assert.Throws<KeyNotFoundException>(() => store.Update(nonExistingCustomer));
     }
+
+    [Fact(DisplayName = "Delete a customer")]
+    public void DeleteCustomerById()
+    {
+        store.Create("John", "Jacobs");
+        var customerToDelete = store.Create("Sally", "Smith");
+        store.Create("Betty", "Burkes");
+
+        Assert.Equal(3, store.GetAll().Count);
+
+        store.DeleteById(customerToDelete.Id);
+
+        var remainingCustomers = store.GetAll();
+        Assert.Equal(2, remainingCustomers.Count);
+        Assert.DoesNotContain(customerToDelete, remainingCustomers);
+    }
 }

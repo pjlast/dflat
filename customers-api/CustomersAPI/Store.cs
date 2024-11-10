@@ -54,6 +54,13 @@ public interface IStore
     /// <returns>The updated <c>Customer</c>.</returns>
     /// <exception cref="KeyNotFoundException">No customer with a matching <c>Id</c> could be found.</exception>
     Customer Update(Customer customer);
+
+    /// <summary>
+    /// Delete a <c>Customer</c> by their ID.
+    /// </summary>
+    /// <param name="id">ID of the customer to be deleted.</param>
+    /// <exception cref="KeyNotFoundException">No customer with a matching <c>Id</c> could be found.</exception>
+    void DeleteById(int id);
 }
 
 public class InMemoryStore : IStore
@@ -92,7 +99,7 @@ public class InMemoryStore : IStore
         var existingCustomer = GetById(customer.Id);
         if (existingCustomer is null)
         {
-            throw new KeyNotFoundException($"No existing customer with ID {customer.Id} found.");
+            throw new KeyNotFoundException($"no existing customer with ID {customer.Id} found.");
         }
 
         _customers = _customers
@@ -107,5 +114,15 @@ public class InMemoryStore : IStore
             .ToList();
 
         return customer;
+    }
+
+    public void DeleteById(int id)
+    {
+        var customer = _customers.Find(c => c.Id == id);
+        if (customer is null)
+        {
+            throw new KeyNotFoundException($"customer with ID {id} does not exist");
+        }
+        _customers = _customers.FindAll(c => c.Id != id);
     }
 }
