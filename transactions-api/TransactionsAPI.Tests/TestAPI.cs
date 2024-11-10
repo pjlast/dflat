@@ -57,5 +57,42 @@ public class TestAPI
             },
             transactionList[0]
         );
+
+        // Delete transactions for Account 2
+#pragma warning disable CA2234
+        result = await client.DeleteAsync("/api/v1/transactions?accountId=2").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+#pragma warning disable CA2234
+        result = await client.GetAsync("/api/v1/transactions?accountId=2").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        transactionList = await result
+            .Content.ReadFromJsonAsync<List<Transaction>>()
+            .ConfigureAwait(true);
+
+        Assert.NotNull(transactionList);
+        Assert.Empty(transactionList);
+
+        // Assert Account 1's transactions still exist
+#pragma warning disable CA2234
+        result = await client.GetAsync("/api/v1/transactions?accountId=1").ConfigureAwait(true);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+
+        transactionList = await result
+            .Content.ReadFromJsonAsync<List<Transaction>>()
+            .ConfigureAwait(true);
+
+        Assert.NotNull(transactionList);
+        Assert.Single(transactionList);
+        Assert.Equal(
+            new Transaction
+            {
+                Id = 1,
+                AccountId = 1,
+                Amount = 10,
+            },
+            transactionList[0]
+        );
     }
 }

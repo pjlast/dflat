@@ -21,6 +21,15 @@ public static class TransactionsAPIV1
         return TypedResults.Ok(transactions);
     }
 
+    static Ok DeleteTransactionsByAccountId(
+        [FromQuery(Name = "accountId")] int accountId,
+        IStore store
+    )
+    {
+        store.DeleteByAccountId(accountId);
+        return TypedResults.Ok();
+    }
+
     public static RouteGroupBuilder MapTransactionsAPI(this RouteGroupBuilder group)
     {
         group
@@ -43,6 +52,17 @@ public static class TransactionsAPIV1
                 generatedOperation.Summary = "Fetch all transactions belonging to an account.";
                 generatedOperation.Description =
                     "Fetch all transactions that belong to the account with the provided ID.";
+                return generatedOperation;
+            });
+
+        group
+            .MapDelete("/", DeleteTransactionsByAccountId)
+            .WithName("DeleteTransactionsByAccountId")
+            .WithOpenApi(generatedOperation =>
+            {
+                generatedOperation.Summary = "Delete all transactions belonging to an account.";
+                generatedOperation.Description =
+                    "Delete all transactions that belong to the account with the provided ID.";
                 return generatedOperation;
             });
 
