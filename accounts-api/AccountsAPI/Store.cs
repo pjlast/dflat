@@ -102,7 +102,7 @@ public class InMemoryStore : IStore
         var account = _accounts.Find(a => a.Id == id);
         if (account is null)
         {
-            throw new KeyNotFoundException($"account with ID {id} does not exit");
+            throw new KeyNotFoundException($"account with ID {id} does not exist");
         }
         _accounts = _accounts.FindAll(a => a.Id != id);
     }

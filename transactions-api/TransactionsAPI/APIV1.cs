@@ -8,7 +8,7 @@ public static class TransactionsAPIV1
 {
     static Created<Transaction> CreateTransaction(CreateTransactionBody body, IStore store)
     {
-        var transaction = store.Create(body.accountId, body.amount);
+        var transaction = store.Create(body.AccountId, body.Amount);
         return TypedResults.Created($"/api/v1/transactions/{transaction.Id}", transaction);
     }
 
@@ -72,6 +72,6 @@ public static class TransactionsAPIV1
 
 public record CreateTransactionBody
 {
-    public int accountId { get; set; }
-    public int amount { get; set; }
+    public int AccountId { get; set; }
+    public int Amount { get; set; }
 }
