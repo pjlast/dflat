@@ -31,7 +31,15 @@ public interface IStore
     /// </summary>
     /// <param name="firstName">First name.</param>
     /// <param name="lastName">Last name.</returns>
+    /// <returns>The newly created customer.</returns>
     Customer Create(string firstName, string lastName);
+
+    /// <summary>
+    /// Fetch a <c>Customer</c> with the provided ID.
+    /// </summary>
+    /// <param name="id">ID of the customer.</param>
+    /// <returns>The matching customer, or null if it does not exist.</returns>
+    Customer? GetById(int id);
 }
 
 public class InMemoryStore : IStore
@@ -51,5 +59,10 @@ public class InMemoryStore : IStore
         var newCustomer = new Customer(nextId, firstName, lastName);
         _customers = _customers.Append(newCustomer).ToList();
         return newCustomer;
+    }
+
+    public Customer? GetById(int id)
+    {
+        return _customers.Find(c => c.Id == id);
     }
 }

@@ -29,4 +29,12 @@ public class TestInMemoryStore
         Assert.Equal("Pete", customer.FirstName);
         Assert.Equal("Peterson", customer.LastName);
     }
+
+    [Fact(DisplayName = "Fetch customer by ID")]
+    public void GetCustomerByID()
+    {
+        var expectedCustomer = store.Create("Sally", "Smith");
+        var gotCustomer = store.GetById(expectedCustomer.Id);
+        Assert.Equal(expectedCustomer, gotCustomer);
+    }
 }
