@@ -27,9 +27,7 @@ public class TestAPI
 
         // Create Customer 2
         payload = new CreateCustomerBody("Betty", "Burkes");
-        result = await client
-            .PostAsJsonAsync("/api/v1/customers", payload)
-            .ConfigureAwait(true);
+        result = await client.PostAsJsonAsync("/api/v1/customers", payload).ConfigureAwait(true);
         Assert.Equal(HttpStatusCode.Created, result.StatusCode);
 
         content = await result.Content.ReadFromJsonAsync<Customer>().ConfigureAwait(true);
@@ -42,7 +40,9 @@ public class TestAPI
         result = await client.GetAsync("/api/v1/customers").ConfigureAwait(true);
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
 
-        var customerList = await result.Content.ReadFromJsonAsync<List<Customer>>().ConfigureAwait(true);
+        var customerList = await result
+            .Content.ReadFromJsonAsync<List<Customer>>()
+            .ConfigureAwait(true);
 
         Assert.NotNull(customerList);
         Assert.Equal(2, customerList.Count);

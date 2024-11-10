@@ -14,7 +14,7 @@ public class TestAPI
         using var client = application.CreateClient();
 
         // Create a transaction for Account 1
-        var payload = new CreateTransactionBody { accountId = 1, amount = 10 };
+        var payload = new CreateTransactionBody { AccountId = 1, Amount = 10 };
         var result = await client
             .PostAsJsonAsync("/api/v1/transactions", payload)
             .ConfigureAwait(true);
@@ -27,7 +27,7 @@ public class TestAPI
         Assert.Equal(10, content?.Amount);
 
         // Create a transaction for Account 2
-        payload = new CreateTransactionBody { accountId = 2, amount = 20 };
+        payload = new CreateTransactionBody { AccountId = 2, Amount = 20 };
         result = await client.PostAsJsonAsync("/api/v1/transactions", payload).ConfigureAwait(true);
         Assert.Equal(HttpStatusCode.Created, result.StatusCode);
 

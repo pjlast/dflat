@@ -29,14 +29,15 @@ public static class CustomersAPIV1
                 return generatedOperation;
             });
 
-        group.MapGet("/", GetCustomers)
+        group
+            .MapGet("/", GetCustomers)
             .WithName("GetAllCustomers")
             .WithOpenApi(generatedOperation =>
-                    {
-                        generatedOperation.Summary = "Get all customers.";
-                        generatedOperation.Description = "Get all customers on the system.";
-                        return generatedOperation;
-                    });
+            {
+                generatedOperation.Summary = "Get all customers.";
+                generatedOperation.Description = "Get all customers on the system.";
+                return generatedOperation;
+            });
         return group;
     }
 }
