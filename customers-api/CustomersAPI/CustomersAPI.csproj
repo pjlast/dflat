@@ -17,4 +17,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
+    <Exec Command="dotnet swagger tofile --output openapi.json $(TargetPath) v1" WorkingDirectory="$(ProjectDir)" />
+  </Target>
+
 </Project>
