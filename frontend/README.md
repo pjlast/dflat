@@ -35,7 +35,6 @@ pnpm run generate
 
 The API is available at `/api/v1` and exposes the following methods:
 
-
 ```
 // Open a new account for a customer
 POST /api/v1/newaccount
