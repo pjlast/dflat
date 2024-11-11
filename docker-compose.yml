@@ -1,8 +1,7 @@
-version: '3.4'
-
 services:
   frontend:
     image: frontend
+    build: ./frontend
     environment:
       - CUSTOMERS_API_URL=http://customers-api:8080
       - TRANSACTIONS_API_URL=http://transactions-api:8080
@@ -17,15 +16,18 @@ services:
 
   customers-api:
     image: customers-api
+    build: ./customers-api/CustomersAPI
     expose:
       - "8080"
 
   accounts-api:
     image: accounts-api
+    build: ./accounts-api/AccountsAPI
     expose:
       - "8080"
 
   transactions-api:
     image: transactions-api
+    build: ./transactions-api/TransactionsAPI
     expose:
       - "8080"
