@@ -35,6 +35,8 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build
+      - name: Check openapi schema changes
+        uses: nickcharlton/diff-check@main
       - name: Test with dotnet CLI
         run: dotnet test
 
