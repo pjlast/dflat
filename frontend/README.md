@@ -1,38 +1,20 @@
-# sv
+# Frontend
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+`frontend` is a SvelteKit app that exposes a UI (available at the root path `/`) as well as an API (available at `/api/v1`).
 
-## Creating a project
+## Setup
 
-If you're seeing this, you've probably already done this step. Congrats!
+The `frontend` service requires `customers-api`, `accounts-api` and `transactions-api` to be running, and you need to provide the service with their URLs.
 
-```bash
-# create a new project in the current directory
-npx sv create
+You can do so by creating a `.env` file (adjust the URLs as needed):
 
-# create a new project in my-app
-npx sv create my-app
+```
+CUSTOMERS_API_URL="http://localhost:5295"
+ACCOUNTS_API_URL="http://localhost:5018"
+TRANSACTIONS_API_URL="http://localhost:5009"
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
+pnpm i
+pnpm run dev
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
