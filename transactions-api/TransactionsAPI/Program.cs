@@ -1,7 +1,7 @@
-using Transactions.APIV1;
-using Transactions.Store;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Transactions.APIV1;
+using Transactions.Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
