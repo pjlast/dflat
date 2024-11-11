@@ -12,20 +12,44 @@
 <section>
 	<h2>Customers</h2>
 
-	{#each data.customers as customer}
-		<div>{customer?.firstName}</div>
-		<div>{customer?.lastName}</div>
-	{/each}
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Balance</th>
+			</tr>
+		</thead>
+		<tbody>
+			{#each data.customers as customer}
+				<tr>
+					<td>{customer?.firstName}</td>
+					<td>{customer?.lastName}</td>
+					<td>0</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 
 	<a href="/customers">Create a new customer</a>
 </section>
 
 <style>
+	h2 {
+		font-size: 2em;
+		font-weight: bold;
+	}
+
+	th {
+		text-align: left;
+	}
+
 	section {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		flex: 0.6;
+		background-color: white;
+		border-radius: 8px;
+		padding: 1em;
 	}
 </style>

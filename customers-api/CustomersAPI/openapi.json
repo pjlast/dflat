@@ -17,7 +17,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateCustomerBody"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateCustomerBody"
+                  }
+                ]
               }
             }
           },
@@ -70,7 +74,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Customer"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                ]
               }
             }
           },
@@ -157,20 +165,27 @@
   "components": {
     "schemas": {
       "CreateCustomerBody": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
         "type": "object",
         "properties": {
           "firstName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "lastName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "Customer": {
+        "required": [
+          "firstName",
+          "id",
+          "lastName"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -178,12 +193,10 @@
             "format": "int32"
           },
           "firstName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "lastName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         },
         "additionalProperties": false

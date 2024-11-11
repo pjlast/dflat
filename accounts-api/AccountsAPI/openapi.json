@@ -17,7 +17,11 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateAccountBody"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateAccountBody"
+                  }
+                ]
               }
             }
           },
@@ -161,6 +165,10 @@
   "components": {
     "schemas": {
       "Account": {
+        "required": [
+          "customerId",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -175,6 +183,9 @@
         "additionalProperties": false
       },
       "CreateAccountBody": {
+        "required": [
+          "customerId"
+        ],
         "type": "object",
         "properties": {
           "customerId": {
