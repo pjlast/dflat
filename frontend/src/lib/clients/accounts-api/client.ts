@@ -1,7 +1,7 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './schema';
-import { ACCOUNTS_API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const newAccountsClient = () => {
-	return createClient<paths>({ baseUrl: ACCOUNTS_API_URL });
+	return createClient<paths>({ baseUrl: env.ACCOUNTS_API_URL });
 };

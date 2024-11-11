@@ -1,7 +1,7 @@
 import createClient from 'openapi-fetch';
 import type { paths } from './schema';
-import { TRANSACTIONS_API_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const newTransactionsClient = () => {
-	return createClient<paths>({ baseUrl: TRANSACTIONS_API_URL });
+	return createClient<paths>({ baseUrl: env.TRANSACTIONS_API_URL });
 };
