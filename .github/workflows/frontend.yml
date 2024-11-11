@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: '18.x'
           cache: pnpm
+          cache-dependency-path: "frontend"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run lint
       - run: pnpm run check
@@ -38,5 +39,6 @@ jobs:
         with:
           node-version: '18.x'
           cache: pnpm
+          cache-dependency-path: "frontend"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run test
