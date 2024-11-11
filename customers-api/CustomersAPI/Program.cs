@@ -15,7 +15,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGroup("/api/v1/customers").MapCustomersAPI();
+app.MapGroup("/api/v1/customers").MapCustomersAPI().WithOpenApi();
 
 app.Run();
 
