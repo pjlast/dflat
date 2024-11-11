@@ -1,0 +1,33 @@
+services:
+  frontend:
+    image: frontend
+    build: ./frontend
+    environment:
+      - CUSTOMERS_API_URL=http://customers-api:8080
+      - TRANSACTIONS_API_URL=http://transactions-api:8080
+      - ACCOUNTS_API_URL=http://accounts-api:8080
+      - ORIGIN=http://localhost:8080
+    ports:
+      - "8080:3000"
+    depends_on:
+      - customers-api
+      - transactions-api
+      - accounts-api
+
+  customers-api:
+    image: customers-api
+    build: ./customers-api/CustomersAPI
+    expose:
+      - "8080"
+
+  accounts-api:
+    image: accounts-api
+    build: ./accounts-api/AccountsAPI
+    expose:
+      - "8080"
+
+  transactions-api:
+    image: transactions-api
+    build: ./transactions-api/TransactionsAPI
+    expose:
+      - "8080"
