@@ -22,7 +22,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 	}
 
-	let transactions = [];
+	const transactions = [];
 	if (initialCredit > 0) {
 		const { data: transaction, response } = await transactionsClient.POST('/api/v1/transactions', {
 			body: {
