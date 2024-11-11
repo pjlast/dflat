@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpLogging(o => { });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSingleton<IStore>(new InMemoryStore());
 
 var app = builder.Build();
+
+app.UseHttpLogging();
 
 if (app.Environment.IsDevelopment())
 {
