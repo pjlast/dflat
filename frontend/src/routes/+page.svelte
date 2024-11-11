@@ -18,14 +18,16 @@
 				<th>Name</th>
 				<th>Surname</th>
 				<th>Balance</th>
+				<th>Transactions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each data.customers as customer}
 				<tr>
-					<td>{customer?.firstName}</td>
-					<td>{customer?.lastName}</td>
+					<td>{customer.firstName}</td>
+					<td>{customer.lastName}</td>
 					<td>0</td>
+					<td><a href={`/customers/${customer.id}`}>View transactions</a></td>
 				</tr>
 			{/each}
 		</tbody>

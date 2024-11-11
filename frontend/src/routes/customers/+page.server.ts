@@ -1,11 +1,10 @@
 import type { Actions } from './$types';
-import createClient from 'openapi-fetch';
-import type { paths } from '$lib/clients/customers-api/schema';
 import { fail, redirect } from '@sveltejs/kit';
+import { newCustomersClient } from '$lib/clients/customers-api/client';
 
 export const actions = {
 	default: async ({ request }) => {
-		const client = createClient<paths>({ baseUrl: 'http://localhost:5295' });
+		const client = newCustomersClient();
 
 		const data = await request.formData();
 		const firstName = data.get('firstName');
